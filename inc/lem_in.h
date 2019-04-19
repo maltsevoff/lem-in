@@ -25,7 +25,7 @@ typedef struct	s_coord
 
 typedef struct	s_link
 {
-	t_list	*rm;
+	t_room	*rm;
 	t_link	*next;
 }				t_link;
 
@@ -33,7 +33,7 @@ typedef struct	s_room
 {
 	char	*nm;
 	t_coord	*coor;
-	t_list	*link;
+	t_link	*link;
 	t_room	*next;
 }				t_room;
 
@@ -46,5 +46,9 @@ typedef struct	s_lem
 }				t_lem;
 
 int				map_len(char **map);
+t_room			*add_last_room(t_room *root);
+void			free_map(char **map);
+char			*ft_strndup(const char *s1, int num);
+t_room			*find_room(t_room *root, char *name);
 
 #endif
