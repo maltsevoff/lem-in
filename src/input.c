@@ -17,6 +17,7 @@ void		read_room(char *line, t_lem *farm)
 	t_room		*room;
 	char		**map;
 
+	valid_room(line);
 	room = add_last_room(farm);
 	map = ft_strsplit(line, ' ');
 	room->coor = (t_coord *)ft_memalloc(sizeof(t_coord));
@@ -45,11 +46,14 @@ void		set_link(char *line, t_lem *farm)
 	t_room		*tmp_room;
 	t_link		*link;
 
+	valid_link(line);
 	name1 = ft_strndup(line, ft_strchr(line, '-') - line);
 	name2 = ft_strdup(ft_strchr(line, '-') + 1);
-	tmp_room = find_room(farm->rooms, name1);
+	if ((tmp_room = find_room(farm->rooms, name1)) == NULL)
+		ft_error("room doesn't exist\n");
 	link = add_last_link(tmp_room);
-	link->rm = find_room(farm->rooms, name2);
+	if ((link->rm = find_room(farm->rooms, name2)) == NULL)
+		ft_error("room doesn't exist\n");
 	tmp_room = find_room(farm->rooms, name2);
 	link = add_last_link(tmp_room);
 	link->rm = find_room(farm->rooms, name1);

@@ -53,5 +53,8 @@ void			free_map(char **map);
 char			*ft_strndup(const char *s1, int num);
 t_room			*find_room(t_room *root, char *name);
 t_link			*add_last_link(t_room *room);
+void			valid_room(char *str);
+void			ft_error(char *error_info);
+void			valid_link(char *str);
 
 #endif
