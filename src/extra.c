@@ -12,18 +12,6 @@
 
 #include "lem_in.h"
 
-int			map_len(char **map)
-{
-	int		i;
-
-	i = 0;
-	if (map == NULL)
-		return (i);
-	while (map[i])
-		i++;
-	return (i);
-}
-
 void	free_map(char **map)
 {
 	int		i;
@@ -41,19 +29,21 @@ void	free_map(char **map)
 		free(map);
 }
 
-t_room		*add_last_room(t_room *root)
+t_room		*add_last_room(t_lem *farm)
 {
 	t_room		*room;
+	t_room		*root;
 
+	root = farm->rooms;
 	if (root == NULL)
 	{
-		root = (t_room *)ft_memalloc(sizeof(t_room));
-		return (root);
+		farm->rooms = (t_room *)ft_memalloc(sizeof(t_room));
+		return (farm->rooms);
 	}
 	else
 	{
 		while (root->next != NULL)
-			root = root->next;
+		root= root->next;
 		room = (t_room *)ft_memalloc(sizeof(t_room));
 		root->next = room;
 		return (room);
@@ -92,14 +82,16 @@ t_room		*find_room(t_room *root, char *name)
 	return (root);
 }
 
-t_link		*add_last_link(t_link *root)
+t_link		*add_last_link(t_room *room)
 {
 	t_link		*link;
+	t_link		*root;
 
+	root = room->link;
 	if (root == NULL)
 	{
-		root = (t_link *)ft_memalloc(sizeof(t_link));
-		return (root);
+		room->link = (t_link *)ft_memalloc(sizeof(t_link));
+		return (room->link);
 	}
 	else
 	{
