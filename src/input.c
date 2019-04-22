@@ -20,6 +20,7 @@ void		read_room(char *line, t_lem *farm)
 	valid_room(line);
 	room = add_last_room(farm);
 	map = ft_strsplit(line, ' ');
+	// printf("%s %p\n", line, line);
 	room->coor = (t_coord *)ft_memalloc(sizeof(t_coord));
 	room->nm = ft_strdup(map[0]);
 	room->coor->x = ft_atoi(map[1]);
@@ -27,16 +28,17 @@ void		read_room(char *line, t_lem *farm)
 	free_map(map);
 }
 
-void		command_start_end(char *line, t_lem *farm, char *position)
+void		command_start_end(char *line, t_lem *farm, char **position)
 {
 	char	**map;
 
-	ft_strdel(&line);
+	free(line);
 	get_next_line(g_fd, &line);
 	map = ft_strsplit(line, ' ');
-	position = ft_strdup(map[0]);
+	*position = ft_strdup(map[0]);
 	read_room(line, farm);
 	free_map(map);
+	free(line);
 }
 
 void		set_link(char *line, t_lem *farm)
@@ -57,17 +59,21 @@ void		set_link(char *line, t_lem *farm)
 	tmp_room = find_room(farm->rooms, name2);
 	link = add_last_link(tmp_room);
 	link->rm = find_room(farm->rooms, name1);
+	ft_strdel(&name1);
+	ft_strdel(&name2);
 }
 
 void		read_links(char *line, t_lem *farm)
 {
+	printf("in: %s %p\n", line, line);
 	set_link(line, farm);
 	ft_strdel(&line);
 	while (get_next_line(g_fd, &line) > 0)
 	{
 		set_link(line, farm);
-		ft_strdel(&line);
+		free(line);
 	}
+	printf("tt: %s %p\n", line, line);
 }
 
 int			input_data(t_lem *farm)
@@ -80,9 +86,9 @@ int			input_data(t_lem *farm)
 	while (get_next_line(g_fd, &line) > 0)
 	{
 		if (ft_strcmp(line, "##start") == 0)
-			command_start_end(line, farm, farm->start);
+			command_start_end(line, farm, &farm->start);
 		else if (ft_strcmp(line, "##end") == 0)
-			command_start_end(line, farm, farm->end);
+			command_start_end(line, farm, &farm->end);
 		else if (ft_strncmp(line, "#", 1) == 0)
 			ft_strdel(&line);
 		else
@@ -90,9 +96,13 @@ int			input_data(t_lem *farm)
 			if (valid_size(line) == 0)
 				break;
 			else
+			{
 				read_room(line, farm);
+				free(line);
+			}
 		}
 	}
+	printf("in: %s %p\n", line, line);
 	read_links(line, farm);
 	return (1);
 }

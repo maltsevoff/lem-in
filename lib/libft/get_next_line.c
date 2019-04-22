@@ -12,90 +12,77 @@
 
 #include "libft.h"
 
-t_list	*check_list(int fd, t_list *lst, int ret)
+char			*ft_new_line(char *str)
 {
-	t_list		*prev;
+	int			i;
+	int			len;
+	char		*new;
 
-	while (lst != NULL)
+	i = 0;
+	len = 0;
+	while (str[len++])
+		;
+	if (!(new = (char *)malloc(sizeof(*new) * len + 1)))
+		return (NULL);
+	while (i < len && str[i] != '\n')
 	{
-		if (lst->content_size == (size_t)fd)
-		{
-			if (ret == 0 && (lst->content == NULL ||
-						((char *)lst->content)[0] == '\0'))
-				return (NULL);
-			return (lst);
-		}
-		prev = lst;
-		lst = lst->next;
+		new[i] = str[i];
+		i++;
 	}
-	lst = ft_lstnew("", fd);
-	prev->next = lst;
-	return (lst);
+	new[i] = '\0';
+	return (new);
 }
 
-t_list	*make_line(char *buf, int fd, t_list *lst, int ret)
+static char		*ft_clean(char *str)
 {
-	char		*temp;
+	char		*new;
+	int			i;
 
-	temp = lst->content;
-	lst->content = ft_strjoin((char *)lst->content, buf);
-	ft_strdel(&temp);
-	while (ft_strchr(buf, '\n') == NULL && ret == BUFF_SIZE)
+	i = 0;
+	while (str[i] != '\n' && str[i])
+		i++;
+	if ((str[i] && !str[i + 1]) || !str[i])
 	{
-		ret = read(fd, buf, BUFF_SIZE);
-		buf[ret] = '\0';
-		temp = lst->content;
-		lst->content = ft_strjoin((char *)lst->content, buf);
-		ft_strdel(&temp);
+		ft_strdel(&str);
+		return (NULL);
 	}
-	ft_strdel(&buf);
-	return (lst);
+	new = ft_strdup(str + i + 1);
+	ft_strdel(&str);
+	return (new);
 }
 
-int		general_work(t_list *lst, char **line)
+static int		other_func(char **new, char ***line)
 {
-	char		*temp;
-
-	if (ft_strchr(lst->content, '\n'))
-	{
-		*line = ft_strnew(ft_strchr(lst->content, '\n') - (char *)lst->content);
-		*line = ft_strncpy(*line, lst->content, ft_strchr(lst->content, '\n')
-				- (char *)lst->content);
-		temp = lst->content;
-		lst->content = ft_strdup(lst->content + (ft_strlen(*line) + 1));
-		ft_strdel(&temp);
-		return (1);
-	}
-	else
-	{
-		*line = ft_strdup(lst->content);
-		ft_memdel(&lst->content);
-		return (1);
-	}
+	**line = ft_new_line(*new);
+	*new = ft_clean(*new);
+	return (1);
 }
 
-int		get_next_line(const int fd, char **line)
+int				get_next_line(const int fd, char **line)
 {
-	int				ret;
-	char			*buf;
-	t_list			*lst;
-	static t_list	*root;
+	char		buff[BUFF_SIZE + 1];
+	int			ret;
+	static char	*new;
+	char		*str;
 
-	buf = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1));
-	ret = read(fd, buf, BUFF_SIZE);
-	buf[ret] = '\0';
-	if (BUFF_SIZE < 1 || fd < 0 || ret < 0)
-	{
-		free(buf);
+	if (!new)
+		new = ft_strnew(1);
+	if (BUFF_SIZE < 0 || !line || fd < 0)
 		return (-1);
-	}
-	if (root == NULL)
+	ret = 2;
+	while (!(ft_strchr(new, '\n')))
 	{
-		root = ft_lstnew("", fd);
-		lst = root;
+		ret = read(fd, buff, BUFF_SIZE);
+		if (ret == -1)
+			return (-1);
+		buff[ret] = '\0';
+		str = new;
+		new = ft_strjoin(new, buff);
+		free(str);
+		if (ret == 0 && *new == '\0')
+			return (0);
+		if (ret == 0)
+			break ;
 	}
-	else if ((lst = check_list(fd, root, ret)) == NULL)
-		return (0);
-	lst = make_line(buf, fd, lst, ret);
-	return (general_work(lst, line));
+	return (other_func(&new, &line));
 }
