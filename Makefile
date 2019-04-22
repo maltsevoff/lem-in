@@ -30,7 +30,7 @@ CC_FLAGS := -Wall -Wextra -Werror
 
 # LINK_FLAGS := $(LIBFT_FLAGS)
 
-LINK_FLAGS = -lmlx -lft -L$(LIBFT_DIR) -framework OpenGL -framework AppKit
+LINK_FLAGS = -lft -L$(LIBFT_DIR)
 
 HEADER_FLAGS := -I $(INC_DIR) -I $(LIBFT_INC)
 
