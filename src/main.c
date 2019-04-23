@@ -43,6 +43,7 @@ int			main(int argc, char **argv)
 	if (input_data(&farm) == 0)
 		return (0);
 	show_farm(&farm);
+	algorithm(&farm);
 	close(g_fd);
 	return (0);
 }

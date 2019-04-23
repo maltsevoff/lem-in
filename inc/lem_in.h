@@ -33,12 +33,16 @@ typedef struct	s_room
 	t_coord			*coor;
 	t_link			*link;
 	struct s_room	*next;
+	int				level;
+	int				fl;
+	struct s_room	*way;
 }				t_room;
 
 typedef struct	s_lem
 {
 	t_room	*rooms;
 	char	*start;
+	t_link	*queue;
 	char	*end;
 	int		ants;
 }				t_lem;
