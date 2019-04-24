@@ -60,5 +60,7 @@ t_link			*add_last_link(t_room *room);
 void			valid_room(char *str);
 void			ft_error(char *error_info);
 void			valid_link(char *str);
+void			algorithm(t_lem *farm);
+int				valid_connect_links(t_link *link, t_room *room1, t_room *room2);
 
 #endif

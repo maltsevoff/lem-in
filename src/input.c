@@ -54,18 +54,18 @@ void		set_link(char *line, t_lem *farm)
 	if ((tmp_room = find_room(farm->rooms, name1)) == NULL)
 		ft_error("room doesn't exist\n");
 	link = add_last_link(tmp_room);
-	if ((link->rm = find_room(farm->rooms, name2)) == NULL)
+	if (valid_connect_links(link, tmp_room,
+			find_room(farm->rooms, name2)) == 0)
 		ft_error("room doesn't exist\n");
 	tmp_room = find_room(farm->rooms, name2);
 	link = add_last_link(tmp_room);
-	link->rm = find_room(farm->rooms, name1);
+	valid_connect_links(link, tmp_room, find_room(farm->rooms, name1));
 	ft_strdel(&name1);
 	ft_strdel(&name2);
 }
 
 void		read_links(char *line, t_lem *farm)
 {
-	printf("in: %s %p\n", line, line);
 	set_link(line, farm);
 	ft_strdel(&line);
 	while (get_next_line(g_fd, &line) > 0)
@@ -73,7 +73,6 @@ void		read_links(char *line, t_lem *farm)
 		set_link(line, farm);
 		free(line);
 	}
-	printf("tt: %s %p\n", line, line);
 }
 
 int			input_data(t_lem *farm)
@@ -102,7 +101,6 @@ int			input_data(t_lem *farm)
 			}
 		}
 	}
-	printf("in: %s %p\n", line, line);
 	read_links(line, farm);
 	return (1);
 }

@@ -1,0 +1,23 @@
+5
+a 1 1
+##start
+b 2 2
+c 3 3
+##end
+d 4 4
+##comment
+e 5 5
+f 6 6
+#comment
+g 7 7
+h 8 8
+e-a
+a-b
+b-f
+f-c
+f-g
+g-c
+d-g
+g-h
+c-d
+d-h

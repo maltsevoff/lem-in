@@ -18,6 +18,24 @@ void		ft_error(char *error_info)
 	exit(0);
 }
 
+int			valid_connect_links(t_link *link, t_room *room1,
+									t_room *room2)
+{
+	t_link		*all_link;
+
+	if (room1 == NULL || room2 == NULL)
+		return (0);
+	all_link = room1->link;
+	while (all_link != NULL)
+	{
+		if (all_link->rm == room2)
+			ft_error("Same link\n");
+		all_link = all_link->next;
+	}
+	link->rm = room2;
+	return (1);
+}
+
 void		valid_room(char *str)
 {
 	int		i;
