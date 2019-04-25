@@ -62,5 +62,7 @@ void			ft_error(char *error_info);
 void			valid_link(char *str);
 void			algorithm(t_lem *farm);
 int				valid_connect_links(t_link *link, t_room *room1, t_room *room2);
+void			work(t_lem *farm);
+void			in_queue_end(t_link *queue, t_link *link);
 
 #endif

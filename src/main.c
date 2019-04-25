@@ -21,7 +21,7 @@ void		show_farm(t_lem *farm)
 	printf("ants: %d\n", farm->ants);
 	while (room != NULL)
 	{
-		printf("%s |", room->nm);
+		printf("lvl: %d | %s |", room->level, room->nm);
 		link = room->link;
 		while (link != NULL)
 		{
@@ -42,8 +42,9 @@ int			main(int argc, char **argv)
 	g_fd = open(argv[1], O_RDONLY);
 	if (input_data(&farm) == 0)
 		return (0);
+	work(&farm);
 	show_farm(&farm);
-	algorithm(&farm);
+	// algorithm(&farm);
 	close(g_fd);
 	return (0);
 }
