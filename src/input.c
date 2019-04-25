@@ -75,7 +75,7 @@ void		read_links(char *line, t_lem *farm)
 	}
 }
 
-int			input_data(t_lem *farm)
+void		input_data(t_lem *farm)
 {
 	char		*line;
 
@@ -93,7 +93,7 @@ int			input_data(t_lem *farm)
 		else
 		{
 			if (valid_size(line) == 0)
-				break;
+				break ;
 			else
 			{
 				read_room(line, farm);
@@ -102,5 +102,4 @@ int			input_data(t_lem *farm)
 		}
 	}
 	read_links(line, farm);
-	return (1);
 }

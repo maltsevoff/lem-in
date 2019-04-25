@@ -40,11 +40,11 @@ int			main(int argc, char **argv)
 	if (argc != 2)
 		return (0);
 	g_fd = open(argv[1], O_RDONLY);
-	if (input_data(&farm) == 0)
-		return (0);
+	input_data(&farm);
 	work(&farm);
 	show_farm(&farm);
-	// algorithm(&farm);
+	delete_links(&farm);
+	algorithm(&farm);
 	close(g_fd);
 	return (0);
 }

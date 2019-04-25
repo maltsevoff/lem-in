@@ -49,7 +49,7 @@ typedef struct	s_lem
 
 int				g_fd;
 
-int				input_data(t_lem *farm);
+void			input_data(t_lem *farm);
 int				map_len(char **map);
 int				valid_size(char *line);
 t_room			*add_last_room(t_lem *farm);

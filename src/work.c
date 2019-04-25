@@ -75,6 +75,7 @@ void		work(t_lem *farm)
 	t_room		*start;
 	t_room		*end;
 	t_link		*tmp_queue;
+	t_room		*tmp_room;
 
 	end = find_room(farm->rooms, farm->end);
 	start = find_room(farm->rooms, farm->start);
@@ -84,5 +85,11 @@ void		work(t_lem *farm)
 		tmp_queue = farm->queue->next;
 		free(farm->queue);
 		farm->queue = tmp_queue;
+	}
+	tmp_room = farm->rooms;
+	while (tmp_room != NULL)
+	{
+		tmp_room->fl = 0;
+		tmp_room = tmp_room->next;
 	}
 }

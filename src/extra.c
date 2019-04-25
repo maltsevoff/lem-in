@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-void	free_map(char **map)
+void		free_map(char **map)
 {
 	int		i;
 
@@ -43,7 +43,7 @@ t_room		*add_last_room(t_lem *farm)
 	else
 	{
 		while (root->next != NULL)
-		root= root->next;
+			root = root->next;
 		room = (t_room *)ft_memalloc(sizeof(t_room));
 		root->next = room;
 		return (room);
