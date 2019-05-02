@@ -43,7 +43,7 @@ int			main(int argc, char **argv)
 	input_data(&farm);
 	work(&farm);
 	show_farm(&farm);
-	delete_links(&farm);
+	// delete_links(&farm);
 	algorithm(&farm);
 	close(g_fd);
 	return (0);
