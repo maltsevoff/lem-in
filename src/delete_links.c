@@ -15,12 +15,22 @@
 void		delete_connection(t_room *room1, t_room *room2)
 {
 	t_link		*links;
+	t_link		*start_link;
 
 	links = room1->link;
-	while (links->next != NULL && links->next->rm != room2)
-		links = links->next;
-	if (links->next == NULL)
-
+	start_link = room1->link;
+	if (start_link->rm == room2)
+	{
+		links = room1->link->next;
+		free(start_link);
+		room1->link = links;
+	}
+	else
+	{
+		while (links->next != NULL && links->next->rm != room2)
+			links = links->next;
+		if (links->next == NULL)
+	}
 }
 
 void		delete_links(t_lem *farm)
