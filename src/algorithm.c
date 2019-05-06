@@ -84,24 +84,28 @@ void		back_way(t_room *end, char *start)
 	printf("%s\n", end->nm);
 }
 
-void		algorithm(t_lem *farm)
+int			algorithm(t_lem *farm, t_room *end, t_room *room)
 {
-	t_room		*room;
 	t_link		*tmp_queue;
 
-	room = find_room(farm->rooms, farm->start);
 	printf("tut: %p | ", farm->queue);
 	set_start_queue(room, farm);
 	show_queue(farm->queue);
 	room = farm->queue->rm;
-	while (ft_strcmp(room->nm, farm->end) != 0)
+	while (farm->queue != NULL)
 	{
 		room->fl = 1;
 		tmp_queue = farm->queue->next;
 		free(farm->queue);
 		farm->queue = tmp_queue;
-		room = add_in_queue(room, farm);
-		// show_queue(farm->queue);
+		if (room != end)
+		{
+			room = add_in_queue(room, farm);
+			// show_queue(farm->queue);
+		}
+		else
+			return (1);
 	}
 	back_way(room, farm->start);
+	return (0);
 }

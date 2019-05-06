@@ -38,13 +38,20 @@ typedef struct	s_room
 	struct s_room	*way;
 }				t_room;
 
+typedef struct	s_way
+{
+	t_room			**room;
+	struct s_way	*next;
+}				t_way;
+
 typedef struct	s_lem
 {
 	t_room	*rooms;
 	char	*start;
-	t_link	*queue;
 	char	*end;
+	t_link	*queue;
 	int		ants;
+	t_way	*way;
 }				t_lem;
 
 int				g_fd;
@@ -60,9 +67,10 @@ t_link			*add_last_link(t_room *room);
 void			valid_room(char *str);
 void			ft_error(char *error_info);
 void			valid_link(char *str);
-void			algorithm(t_lem *farm);
+int				algorithm(t_lem *farm, t_room *end, t_room *room);
 int				valid_connect_links(t_link *link, t_room *room1, t_room *room2);
 void			work(t_lem *farm);
 void			in_queue_end(t_link *queue, t_link *link);
+void			find_ways(t_lem *farm);
 
 #endif

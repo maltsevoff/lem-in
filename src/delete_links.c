@@ -29,7 +29,6 @@ void		delete_connection(t_room *room1, t_room *room2)
 	{
 		while (links->next != NULL && links->next->rm != room2)
 			links = links->next;
-		if (links->next == NULL)
 	}
 }
 

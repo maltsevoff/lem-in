@@ -41,10 +41,10 @@ int			main(int argc, char **argv)
 		return (0);
 	g_fd = open(argv[1], O_RDONLY);
 	input_data(&farm);
-	work(&farm);
+	// work(&farm);
 	show_farm(&farm);
 	// delete_links(&farm);
-	algorithm(&farm);
+	find_ways(&farm);
 	close(g_fd);
 	return (0);
 }
