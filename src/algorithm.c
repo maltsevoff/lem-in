@@ -39,6 +39,7 @@ void		set_start_queue(t_room *start, t_lem *farm)
 
 	room_link = start->link;
 	start->fl = 1;
+	start->level = 1;
 	farm->queue = (t_link *)ft_memalloc(sizeof(t_link));
 	farm->queue->rm = room_link->rm;
 	room_link->rm->fl = 1;
@@ -48,6 +49,7 @@ void		set_start_queue(t_room *start, t_lem *farm)
 	{
 		in_queue_end(farm->queue, room_link);
 		room_link->rm->fl = 1;
+		room_link->rm->level = start->level + 1;
 		room_link->rm->way = start;
 		room_link = room_link->next;
 	}
@@ -67,6 +69,7 @@ t_room		*add_in_queue(t_room *root_rm, t_lem *farm)
 			in_queue_end(farm->queue, link);
 			link->rm->way = root_rm;
 			link->rm->fl = 1;
+			link->rm->level = root_rm->level + 1;
 		}
 		link = link->next;
 	}
@@ -92,20 +95,22 @@ int			algorithm(t_lem *farm, t_room *end, t_room *room)
 	set_start_queue(room, farm);
 	show_queue(farm->queue);
 	room = farm->queue->rm;
-	while (farm->queue != NULL)
+	while (farm->queue != NULL || room != NULL)
 	{
 		room->fl = 1;
-		tmp_queue = farm->queue->next;
-		free(farm->queue);
-		farm->queue = tmp_queue;
 		if (room != end)
 		{
 			room = add_in_queue(room, farm);
 			// show_queue(farm->queue);
 		}
 		else
+		{
+			back_way(room, farm->start);
 			return (1);
+		}
+		tmp_queue = farm->queue->next;
+		free(farm->queue);
+		farm->queue = tmp_queue;
 	}
-	back_way(room, farm->start);
 	return (0);
 }

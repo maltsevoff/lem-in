@@ -73,4 +73,6 @@ void			work(t_lem *farm);
 void			in_queue_end(t_link *queue, t_link *link);
 void			find_ways(t_lem *farm);
 
+void		show_farm(t_lem *farm);
+
 #endif

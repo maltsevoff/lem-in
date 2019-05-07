@@ -35,16 +35,17 @@ void		show_farm(t_lem *farm)
 
 int			main(int argc, char **argv)
 {
-	t_lem	farm;
+	t_lem	*farm;
 
 	if (argc != 2)
 		return (0);
 	g_fd = open(argv[1], O_RDONLY);
-	input_data(&farm);
+	farm = (t_lem *)ft_memalloc(sizeof(t_lem));
+	input_data(farm);
 	// work(&farm);
-	show_farm(&farm);
+	show_farm(farm);
 	// delete_links(&farm);
-	find_ways(&farm);
+	find_ways(farm);
 	close(g_fd);
 	return (0);
 }
