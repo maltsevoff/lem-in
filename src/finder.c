@@ -53,6 +53,7 @@ void		save_delete(t_way *way, t_room *end, t_room *start)
 	t_room		*current;
 
 	i = end->level - 1;
+	way->length = end->level;
 	way->room = (t_room **)ft_memalloc(sizeof(t_room *) * end->level);
 	current = end;
 	while (current != NULL && i >= 0)
@@ -93,6 +94,26 @@ void		save_way(t_lem *farm, t_room *end, t_room *start)
 	save_delete(tmp_way, end, start);
 }
 
+void		show_ways(t_lem *farm)
+{
+	int		i;
+	t_way	*way;
+
+	way = farm->way;
+	while (way != NULL)
+	{
+		i = 0;
+		printf("way: ");
+		while (i < way->length)
+		{
+			printf("%s ", way->room[i]->nm);
+			i++;
+		}
+		printf("\n");
+		way = way->next;
+	}
+}
+
 void		find_ways(t_lem *farm)
 {
 	t_room		*end;
@@ -120,4 +141,5 @@ void		find_ways(t_lem *farm)
 		}
 		show_farm(farm);
 	}
+	show_ways(farm);
 }

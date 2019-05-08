@@ -41,6 +41,7 @@ typedef struct	s_room
 typedef struct	s_way
 {
 	t_room			**room;
+	int				length;
 	struct s_way	*next;
 }				t_way;
 
