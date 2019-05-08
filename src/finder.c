@@ -57,7 +57,6 @@ void		save_delete(t_way *way, t_room *end, t_room *start)
 	current = end;
 	while (current != NULL && i >= 0)
 	{
-		printf("tt: %s %d\n", current->nm, end->level);
 		way->room[i] = current;
 		if (current != start && current != end)
 			delete_links(current);
@@ -65,7 +64,7 @@ void		save_delete(t_way *way, t_room *end, t_room *start)
 		current = current->way;
 	}
 	int		j = 0;
-	printf("way1: ");
+	printf("size: %d way1: ", end->level);
 	while (j < end->level)
 	{
 		printf("%s ", way->room[j]->nm);

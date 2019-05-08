@@ -22,15 +22,23 @@ void		show_queue(t_link *queue)
 	printf("\n");
 }
 
-void		in_queue_end(t_link *queue, t_link *link)
+void		in_queue_end(t_lem *farm, t_link *link)
 {
 	t_link		*elem;
 
-	while (queue->next != NULL)
-		queue = queue->next;
-	elem = (t_link *)ft_memalloc(sizeof(t_link));
-	queue->next = elem;
-	elem->rm = link->rm;
+	if (farm->queue != NULL)
+	{
+		while (farm->queue->next != NULL)
+			farm->queue = farm->queue->next;
+		elem = (t_link *)ft_memalloc(sizeof(t_link));
+		farm->queue->next = elem;
+		elem->rm = link->rm;
+	}
+	else
+	{
+		farm->queue = (t_link *)ft_memalloc(sizeof(t_link));
+		farm->queue->rm = link->rm;
+	}
 }
 
 void		set_start_queue(t_room *start, t_lem *farm)
@@ -47,7 +55,7 @@ void		set_start_queue(t_room *start, t_lem *farm)
 	room_link = room_link->next;
 	while (room_link != NULL)
 	{
-		in_queue_end(farm->queue, room_link);
+		in_queue_end(farm, room_link);
 		room_link->rm->fl = 1;
 		room_link->rm->level = start->level + 1;
 		room_link->rm->way = start;
@@ -55,7 +63,7 @@ void		set_start_queue(t_room *start, t_lem *farm)
 	}
 }
 
-t_room		*add_in_queue(t_room *root_rm, t_lem *farm)
+void		add_in_queue(t_room *root_rm, t_lem *farm)
 {
 	t_link		*link;
 
@@ -66,14 +74,28 @@ t_room		*add_in_queue(t_room *root_rm, t_lem *farm)
 	{
 		if (link->rm->fl == 0)
 		{
-			in_queue_end(farm->queue, link);
+			in_queue_end(farm, link);
 			link->rm->way = root_rm;
 			link->rm->fl = 1;
+			// printf("root: %s r_lvl: %d\n", root_rm->nm, root_rm->level);
 			link->rm->level = root_rm->level + 1;
 		}
 		link = link->next;
 	}
-	return (farm->queue->rm);
+}
+
+t_room		*first_from_queue(t_lem *farm)
+{
+	t_link		*tmp_queue;
+	t_room		*room;
+
+	if (farm->queue == NULL)
+		return (NULL);
+	room = farm->queue->rm;
+	tmp_queue = farm->queue->next;
+	free(farm->queue);
+	farm->queue = tmp_queue;
+	return (room);
 }
 
 void		back_way(t_room *end, char *start)
@@ -89,18 +111,18 @@ void		back_way(t_room *end, char *start)
 
 int			algorithm(t_lem *farm, t_room *end, t_room *room)
 {
-	t_link		*tmp_queue;
-
+	printf("start-------------------\n");
 	printf("tut: %p | ", farm->queue);
 	set_start_queue(room, farm);
 	show_queue(farm->queue);
-	room = farm->queue->rm;
+	room = first_from_queue(farm);
 	while (farm->queue != NULL || room != NULL)
 	{
 		room->fl = 1;
 		if (room != end)
 		{
-			room = add_in_queue(room, farm);
+			add_in_queue(room, farm);
+			room = first_from_queue(farm);
 			// show_queue(farm->queue);
 		}
 		else
@@ -108,9 +130,6 @@ int			algorithm(t_lem *farm, t_room *end, t_room *room)
 			back_way(room, farm->start);
 			return (1);
 		}
-		tmp_queue = farm->queue->next;
-		free(farm->queue);
-		farm->queue = tmp_queue;
 	}
 	return (0);
 }

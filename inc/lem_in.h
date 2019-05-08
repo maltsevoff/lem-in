@@ -70,7 +70,7 @@ void			valid_link(char *str);
 int				algorithm(t_lem *farm, t_room *end, t_room *room);
 int				valid_connect_links(t_link *link, t_room *room1, t_room *room2);
 void			work(t_lem *farm);
-void			in_queue_end(t_link *queue, t_link *link);
+void			in_queue_end(t_lem *farm, t_link *link);
 void			find_ways(t_lem *farm);
 
 void		show_farm(t_lem *farm);
