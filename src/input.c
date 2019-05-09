@@ -14,6 +14,7 @@
 
 void		read_room(char *line, t_lem *farm)
 {
+	int			i;
 	t_room		*room;
 	char		**map;
 
@@ -23,6 +24,10 @@ void		read_room(char *line, t_lem *farm)
 	// printf("%s %p\n", line, line);
 	room->coor = (t_coord *)ft_memalloc(sizeof(t_coord));
 	room->nm = ft_strdup(map[0]);
+	i = -1;
+	while (room->nm[++i])
+		if (room->nm[i] == '-')
+			ft_error("using '-' in room name is forbidden\n");
 	room->coor->x = ft_atoi(map[1]);
 	room->coor->y = ft_atoi(map[2]);
 	free_map(map);
