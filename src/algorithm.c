@@ -72,8 +72,8 @@ void		add_in_queue(t_room *root_rm, t_lem *farm)
 	t_link		*link;
 
 	link = root_rm->link;
-	printf("root: %s\n", root_rm->nm);
-	show_queue(farm->queue);
+	// printf("root: %s\n", root_rm->nm);
+	// show_queue(farm->queue);
 	while (link != NULL)
 	{
 		if (link->rm->fl == 0)
@@ -116,22 +116,25 @@ void		back_way(t_room *end, char *start)
 int			algorithm(t_lem *farm, t_room *end, t_room *room)
 {
 	printf("start-------------------\n");
-	printf("tut: %p | \n", farm->queue);
+	// printf("tut: %p | \n", farm->queue);
 	if (set_start_queue(room, farm) == 0)
 		return (0);
-	show_queue(farm->queue);
+	// show_queue(farm->queue);
 	room = first_from_queue(farm);
 	while (farm->queue != NULL || room != NULL)
 	{
 		room->fl = 1;
+		show_queue(farm->queue);
 		if (room != end)
 		{
+			// printf("room: %s\n", room->nm);
+			// show_queue(farm->queue);
 			add_in_queue(room, farm);
 			room = first_from_queue(farm);
-			// show_queue(farm->queue);
 		}
 		else
 		{
+			printf("tut\n");
 			back_way(room, farm->start);
 			return (1);
 		}

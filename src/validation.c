@@ -68,15 +68,24 @@ void		valid_link(char *str)
 
 	i = 0;
 	if (str == NULL || str[i] == '\0')
-		ft_error("ivalid link\n");
+	{
+		printf("%s\n", str);
+		ft_error("invalid link\n");
+	}
 	tmp = i;
 	while (str[i] && str[i] != '-')
 		i++;
 	if (str[i] != '-' || tmp == i)
-		ft_error("ivalid link\n");
+	{
+		printf("%s\n", str);
+		ft_error("invalid link\n");
+	}
 	tmp = ++i;
 	while (str[i])
 		i++;
 	if (tmp == i)
-		ft_error("ivalid link\n");
+	{
+		printf("%s\n", str);
+		ft_error("invalid link\n");
+	}
 }

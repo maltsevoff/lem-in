@@ -75,7 +75,8 @@ void		read_links(char *line, t_lem *farm)
 	ft_strdel(&line);
 	while (get_next_line(g_fd, &line) > 0)
 	{
-		set_link(line, farm);
+		if (*line != '#')
+			set_link(line, farm);
 		free(line);
 	}
 }
