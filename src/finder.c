@@ -123,7 +123,7 @@ void		find_ways(t_lem *farm)
 
 	start = find_room(farm->rooms, farm->start);
 	end = find_room(farm->rooms, farm->end);
-	while (algorithm(farm, end, start))
+	while (bfs(farm, end, start))
 	{
 		save_way(farm, end, start);
 		tmp_room = farm->rooms;
