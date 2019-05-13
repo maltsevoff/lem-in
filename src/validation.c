@@ -69,7 +69,6 @@ void		valid_link(char *str)
 	i = 0;
 	if (str == NULL || str[i] == '\0')
 	{
-		printf("%s\n", str);
 		ft_error("invalid link\n");
 	}
 	tmp = i;
@@ -77,7 +76,6 @@ void		valid_link(char *str)
 		i++;
 	if (str[i] != '-' || tmp == i)
 	{
-		printf("%s\n", str);
 		ft_error("invalid link\n");
 	}
 	tmp = ++i;
@@ -85,7 +83,6 @@ void		valid_link(char *str)
 		i++;
 	if (tmp == i)
 	{
-		printf("%s\n", str);
 		ft_error("invalid link\n");
 	}
 }
