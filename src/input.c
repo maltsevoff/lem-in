@@ -38,12 +38,20 @@ void		command_start_end(char *line, t_lem *farm, char **position)
 	char	**map;
 
 	free(line);
-	get_next_line(g_fd, &line);
-	map = ft_strsplit(line, ' ');
-	*position = ft_strdup(map[0]);
-	read_room(line, farm);
-	free_map(map);
-	free(line);
+	while (get_next_line(g_fd, &line) > 0)
+	{
+		if (ft_strncmp(line, "#", 1) == 0)
+			free(line);
+		else
+		{
+			map = ft_strsplit(line, ' ');
+			*position = ft_strdup(map[0]);
+			read_room(line, farm);
+			free_map(map);
+			free(line);
+			break ;
+		}
+	}
 }
 
 void		set_link(char *line, t_lem *farm)
