@@ -20,20 +20,6 @@ void		in_queue_end(t_lem *farm, t_room *room)
 	room->fl = 1;
 }
 
-t_room		*first_from_queue(t_lem *farm)
-{
-	t_link		*tmp_queue;
-	t_room		*room;
-
-	if (farm->queue == NULL)
-		return (NULL);
-	room = farm->queue->rm;
-	tmp_queue = farm->queue->next;
-	free(farm->queue);
-	farm->queue = tmp_queue;
-	return (room);
-}
-
 void		back_way(t_room *end, char *start)
 {
 	printf("way: ");
@@ -48,13 +34,22 @@ void		back_way(t_room *end, char *start)
 void		work_room(t_room *room, t_lem *farm)
 {
 	t_link		*link;
+	t_link		*tmp_queue;
 
 	link = room->link;
+	tmp_queue = farm->queue;
 	while (link != NULL)
 	{
 		if (link->rm->fl == 0)
 		{
-			in_queue_end(farm, link->rm);
+			while (tmp_queue->next != NULL)
+			{
+				tmp_queue = tmp_queue->next;
+				printf("tut\n");
+			}
+			tmp_queue->next = (t_link *)ft_memalloc(sizeof(t_link));
+			tmp_queue->next->rm = link->rm;
+			// in_queue_end(farm, link->rm);
 			link->rm->way = room;
 			link->rm->level = room->level + 1;
 		}
@@ -72,23 +67,21 @@ void		show_queue(t_link *queue)
 	printf("\n");
 }
 
-int			bfs(t_lem *farm, t_room *end, t_room *room)
+int			bfs(t_lem *farm, t_room *end, t_room *start)
 {
-	room->level = 1;
-	room->fl = 1;
-	// printf("--------------: %s\n", end->nm);
-	while (farm->queue || room)
+	t_link		*tmp_queue;
+
+	start->level = 1;
+	start->fl = 1;
+	farm->queue = (t_link *)ft_memalloc(sizeof(t_link));
+	farm->queue->rm = start;
+	while (farm->queue && farm->queue->rm != end)
 	{
-		// printf("room: %s\n", room->nm);
-		work_room(room, farm);
-		// show_queue(farm->queue);
-		if (room == end)
-		{
-			// back_way(end, farm->start);
-			return (1);
-		}
-		room = first_from_queue(farm);
+		work_room(farm->queue->rm, farm);
+		tmp_queue = farm->queue;
+		farm->queue = farm->queue->next;
+		free(tmp_queue);
+		tmp_queue = NULL;
 	}
-	// printf("end: %p %p\n", room, farm->queue);
-	return (0);
+	return (end->way == NULL ? 0 : 1);
 }

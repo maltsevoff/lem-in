@@ -64,14 +64,14 @@ void		save_delete(t_way *way, t_room *end, t_room *start)
 		i--;
 		current = current->way;
 	}
-	int		j = 0;
-	printf("size: %d way1: ", end->level);
-	while (j < end->level)
-	{
-		printf("%s ", way->room[j]->nm);
-		j++;
-	}
-	printf("\n");
+	// int		j = 0;
+	// printf("size: %d way1: ", end->level);
+	// while (j < end->level)
+	// {
+	// 	printf("%s ", way->room[j]->nm);
+	// 	j++;
+	// }
+	// printf("\n");
 }
 
 void		save_way(t_lem *farm, t_room *end, t_room *start)
@@ -123,13 +123,15 @@ void		find_ways(t_lem *farm)
 
 	start = find_room(farm->rooms, farm->start);
 	end = find_room(farm->rooms, farm->end);
-	while (bfs(farm, end, start))
+	while (bfs_yasya(farm, end, start))
 	{
+		// printf("tut\n");
 		save_way(farm, end, start);
 		tmp_room = farm->rooms;
 		while (tmp_room != NULL)
 		{
 			tmp_room->fl = 0;
+			tmp_room->way = NULL;
 			tmp_room = tmp_room->next;
 		}
 		tmp_queue = farm->queue;
@@ -139,7 +141,7 @@ void		find_ways(t_lem *farm)
 			free(farm->queue);
 			farm->queue = tmp_queue;
 		}
-		show_farm(farm);
+		// show_farm(farm);
 	}
 	show_ways(farm);
 }
