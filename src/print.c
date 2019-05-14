@@ -1,0 +1,43 @@
+#include "lem_in.h"
+
+void		in_list_end(t_list **lst, char *str)
+{
+	t_list	*tmp;
+
+	if (*lst == NULL)
+	{
+		*lst = (t_list *)ft_memalloc(sizeof(t_list));
+		(*lst)->content = str;
+	}
+	else
+	{
+		tmp = *lst;
+		while (tmp->next != NULL)
+			tmp = tmp->next;
+		tmp->next = (t_list *)ft_memalloc(sizeof(t_list));
+		tmp->next->content = str;
+	}
+}
+
+void		print_list(t_list *lst)
+{
+	while (lst != NULL)
+	{
+		ft_putstr(lst->content);
+		ft_putstr("\n");
+		lst = lst->next;
+	}
+}
+
+void		free_list(t_list **lst)
+{
+	t_list		*tmp;
+
+	while (*lst != NULL)
+	{
+		tmp = (*lst)->next;
+		free((*lst)->content);
+		free(*lst);
+		*lst = tmp;
+	}
+}

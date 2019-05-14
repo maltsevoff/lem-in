@@ -76,20 +76,19 @@ int			bfs(t_lem *farm, t_room *end, t_room *room)
 {
 	room->level = 1;
 	room->fl = 1;
-	printf("--------------: %s\n", end->nm);
+	// printf("--------------: %s\n", end->nm);
 	while (farm->queue || room)
 	{
-		printf("room: %s\n", room->nm);
+		// printf("room: %s\n", room->nm);
 		work_room(room, farm);
-		show_queue(farm->queue);
+		// show_queue(farm->queue);
 		if (room == end)
 		{
-			back_way(end, farm->start);
+			// back_way(end, farm->start);
 			return (1);
 		}
 		room = first_from_queue(farm);
 	}
-	printf("room: %p\n", room);
-	show_farm(farm);
+	// printf("end: %p %p\n", room, farm->queue);
 	return (0);
 }

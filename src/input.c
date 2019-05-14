@@ -21,7 +21,6 @@ void		read_room(char *line, t_lem *farm)
 	valid_room(line);
 	room = add_last_room(farm);
 	map = ft_strsplit(line, ' ');
-	// printf("%s %p\n", line, line);
 	room->coor = (t_coord *)ft_memalloc(sizeof(t_coord));
 	room->nm = ft_strdup(map[0]);
 	i = -1;
@@ -37,18 +36,18 @@ void		command_start_end(char *line, t_lem *farm, char **position)
 {
 	char	**map;
 
-	free(line);
+	in_list_end(&farm->list, line);
 	while (get_next_line(g_fd, &line) > 0)
 	{
 		if (ft_strncmp(line, "#", 1) == 0)
-			free(line);
+			in_list_end(&farm->list, line);
 		else
 		{
 			map = ft_strsplit(line, ' ');
 			*position = ft_strdup(map[0]);
 			read_room(line, farm);
 			free_map(map);
-			free(line);
+			in_list_end(&farm->list, line);
 			break ;
 		}
 	}
@@ -80,12 +79,12 @@ void		set_link(char *line, t_lem *farm)
 void		read_links(char *line, t_lem *farm)
 {
 	set_link(line, farm);
-	ft_strdel(&line);
+	in_list_end(&farm->list, line);
 	while (get_next_line(g_fd, &line) > 0)
 	{
 		if (*line != '#')
 			set_link(line, farm);
-		free(line);
+		in_list_end(&farm->list, line);
 	}
 }
 
@@ -95,7 +94,7 @@ void		input_data(t_lem *farm)
 
 	get_next_line(g_fd, &line);
 	farm->ants = ft_atoi(line);
-	ft_strdel(&line);
+	in_list_end(&farm->list, line);
 	while (get_next_line(g_fd, &line) > 0)
 	{
 		if (ft_strcmp(line, "##start") == 0)
@@ -103,7 +102,7 @@ void		input_data(t_lem *farm)
 		else if (ft_strcmp(line, "##end") == 0)
 			command_start_end(line, farm, &farm->end);
 		else if (ft_strncmp(line, "#", 1) == 0)
-			ft_strdel(&line);
+			in_list_end(&farm->list, line);
 		else
 		{
 			if (valid_size(line) == 0)
@@ -111,7 +110,7 @@ void		input_data(t_lem *farm)
 			else
 			{
 				read_room(line, farm);
-				free(line);
+				in_list_end(&farm->list, line);
 			}
 		}
 	}

@@ -42,9 +42,13 @@ int			main(int argc, char **argv)
 	g_fd = open(argv[1], O_RDONLY);
 	farm = (t_lem *)ft_memalloc(sizeof(t_lem));
 	input_data(farm);
-	show_farm(farm);
+	print_list(farm->list);
+	// show_farm(farm);
 	// delete_links(&farm);
 	find_ways(farm);
 	close(g_fd);
+	free_list(&farm->list);
+	system("leaks lem-in > leaks");
+	printf("leak: %p\n", farm);
 	return (0);
 }
