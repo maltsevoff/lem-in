@@ -81,7 +81,7 @@ void	add_rooms(t_room *tmp_rooms, t_link *turn, t_link *tmp_link)
 
 int		bfs_yasya(t_lem *lem, t_room *end, t_room *start)
 {
-	t_room	*tmp_rooms;
+	// t_room	*tmp_rooms;
 	// t_link	*tmp_link;
 	t_link	*del_queue;
 
@@ -93,7 +93,7 @@ int		bfs_yasya(t_lem *lem, t_room *end, t_room *start)
 	lem->queue->next = NULL;
 	while (lem->queue && lem->queue->rm != end)
 	{
-		tmp_rooms = lem->rooms;
+		// tmp_rooms = lem->rooms;
 		// while (tmp_rooms && tmp_rooms != lem->queue->rm)
 			// tmp_rooms = tmp_rooms->next;
 		// tmp_link = lem->queue->rm->link;

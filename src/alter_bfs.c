@@ -2,15 +2,12 @@
 
 void		in_queue_end(t_lem *farm, t_room *room)
 {
-	t_link		*elem;
-
 	if (farm->queue != NULL)
 	{
 		while (farm->queue->next != NULL)
 			farm->queue = farm->queue->next;
-		elem = (t_link *)ft_memalloc(sizeof(t_link));
-		farm->queue->next = elem;
-		elem->rm = room;
+		farm->queue->next = (t_link *)ft_memalloc(sizeof(t_link));
+		farm->queue->next->rm = room;
 	}
 	else
 	{
@@ -42,16 +39,14 @@ void		work_room(t_room *room, t_lem *farm)
 	{
 		if (link->rm->fl == 0)
 		{
+			link->rm->way = room;
+			link->rm->level = room->level + 1;
+			link->rm->fl = 1;
 			while (tmp_queue->next != NULL)
-			{
 				tmp_queue = tmp_queue->next;
-				printf("tut\n");
-			}
 			tmp_queue->next = (t_link *)ft_memalloc(sizeof(t_link));
 			tmp_queue->next->rm = link->rm;
 			// in_queue_end(farm, link->rm);
-			link->rm->way = room;
-			link->rm->level = room->level + 1;
 		}
 		link = link->next;
 	}

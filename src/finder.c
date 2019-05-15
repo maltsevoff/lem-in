@@ -123,7 +123,7 @@ void		find_ways(t_lem *farm)
 
 	start = find_room(farm->rooms, farm->start);
 	end = find_room(farm->rooms, farm->end);
-	while (bfs_yasya(farm, end, start))
+	while (bfs(farm, end, start))
 	{
 		// printf("tut\n");
 		save_way(farm, end, start);
