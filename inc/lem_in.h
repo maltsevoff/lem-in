@@ -75,11 +75,11 @@ void			work(t_lem *farm);
 void			in_queue_end(t_lem *farm, t_room *room);
 void			find_ways(t_lem *farm);
 int				bfs(t_lem *farm, t_room *end, t_room *room);
+void			send_insects(t_lem *farm, t_room *start, t_room *end);
 
 void			in_list_end(t_list **lst, char *str);
 void			print_list(t_list *lst);
 void			free_list(t_list **lst);
-int		bfs_yasya(t_lem *lem, t_room *end, t_room *start);
 
 void		back_way(t_room *end, char *start);
 void		show_farm(t_lem *farm);

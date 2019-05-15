@@ -144,4 +144,11 @@ void		find_ways(t_lem *farm)
 		// show_farm(farm);
 	}
 	show_ways(farm);
+	tmp_room = farm->rooms;
+	while (tmp_room != NULL)
+	{
+		tmp_room->fl = 0;
+		tmp_room = tmp_room->next;
+	}
+	send_insects(farm, start, end);
 }
