@@ -71,17 +71,12 @@ void			ft_error(char *error_info);
 void			valid_link(char *str);
 int				algorithm(t_lem *farm, t_room *end, t_room *room);
 int				valid_connect_links(t_link *link, t_room *room1, t_room *room2);
-void			work(t_lem *farm);
-void			in_queue_end(t_lem *farm, t_room *room);
-void			find_ways(t_lem *farm);
+void			find_ways(t_lem *farm, t_room *start, t_room *end);
 int				bfs(t_lem *farm, t_room *end, t_room *room);
 void			send_insects(t_lem *farm, t_room *start, t_room *end);
 
 void			in_list_end(t_list **lst, char *str);
 void			print_list(t_list *lst);
 void			free_list(t_list **lst);
-
-void		back_way(t_room *end, char *start);
-void		show_farm(t_lem *farm);
 
 #endif

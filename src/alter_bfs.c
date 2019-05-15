@@ -1,13 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   alter_bfs.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: omaltsev <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/15 20:33:48 by omaltsev          #+#    #+#             */
+/*   Updated: 2019/05/15 20:33:50 by omaltsev         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem_in.h"
 
 void		in_queue_end(t_lem *farm, t_room *room)
 {
+	t_link		*tmp_queue;
+
 	if (farm->queue != NULL)
 	{
-		while (farm->queue->next != NULL)
-			farm->queue = farm->queue->next;
-		farm->queue->next = (t_link *)ft_memalloc(sizeof(t_link));
-		farm->queue->next->rm = room;
+		tmp_queue = farm->queue;
+		while (tmp_queue->next != NULL)
+			tmp_queue = tmp_queue->next;
+		tmp_queue->next = (t_link *)ft_memalloc(sizeof(t_link));
+		tmp_queue->next->rm = room;
 	}
 	else
 	{
@@ -15,17 +30,6 @@ void		in_queue_end(t_lem *farm, t_room *room)
 		farm->queue->rm = room;
 	}
 	room->fl = 1;
-}
-
-void		back_way(t_room *end, char *start)
-{
-	printf("way: ");
-	while (ft_strcmp(end->nm, start) != 0)
-	{
-		printf("%s-", end->nm);
-		end = end->way;
-	}
-	printf("%s\n", end->nm);
 }
 
 void		work_room(t_room *room, t_lem *farm)
@@ -41,12 +45,7 @@ void		work_room(t_room *room, t_lem *farm)
 		{
 			link->rm->way = room;
 			link->rm->level = room->level + 1;
-			link->rm->fl = 1;
-			while (tmp_queue->next != NULL)
-				tmp_queue = tmp_queue->next;
-			tmp_queue->next = (t_link *)ft_memalloc(sizeof(t_link));
-			tmp_queue->next->rm = link->rm;
-			// in_queue_end(farm, link->rm);
+			in_queue_end(farm, link->rm);
 		}
 		link = link->next;
 	}

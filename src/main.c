@@ -12,29 +12,22 @@
 
 #include "lem_in.h"
 
-void		show_farm(t_lem *farm)
+void		zero_flags(t_lem *farm)
 {
-	t_room	*room;
-	t_link	*link;
+	t_room		*room;
 
 	room = farm->rooms;
-	printf("ants: %d\n", farm->ants);
 	while (room != NULL)
 	{
-		printf("lvl: %d | %s |", room->level, room->nm);
-		link = room->link;
-		while (link != NULL)
-		{
-			printf(" %s", link->rm->nm);
-			link = link->next;
-		}
-		printf("\n");
+		room->fl = 0;
 		room = room->next;
 	}
 }
 
 int			main(int argc, char **argv)
 {
+	t_room	*start;
+	t_room	*end;
 	t_lem	*farm;
 
 	if (argc != 2)
@@ -42,12 +35,14 @@ int			main(int argc, char **argv)
 	g_fd = open(argv[1], O_RDONLY);
 	farm = (t_lem *)ft_memalloc(sizeof(t_lem));
 	input_data(farm);
-	// print_list(farm->list);
-	// show_farm(farm);
+	start = find_room(farm->rooms, farm->start);
+	end = find_room(farm->rooms, farm->end);
+	print_list(farm->list);
 	// delete_links(&farm);
-	find_ways(farm);
+	find_ways(farm, start, end);
 	close(g_fd);
 	free_list(&farm->list);
+	send_insects(farm, start, end);
 	// system("leaks lem-in > leaks");
 	// printf("leak: %p\n", farm);
 	return (0);
