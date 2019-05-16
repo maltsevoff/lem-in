@@ -24,15 +24,13 @@ void		zero_flags(t_lem *farm)
 	}
 }
 
-int			main(int argc, char **argv)
+int			main(void)
 {
 	t_room	*start;
 	t_room	*end;
 	t_lem	*farm;
 
-	if (argc != 2)
-		return (0);
-	g_fd = open(argv[1], O_RDONLY);
+	g_fd = 0;
 	farm = (t_lem *)ft_memalloc(sizeof(t_lem));
 	input_data(farm);
 	start = find_room(farm->rooms, farm->start);
@@ -40,7 +38,6 @@ int			main(int argc, char **argv)
 	print_list(farm->list);
 	// delete_links(&farm);
 	find_ways(farm, start, end);
-	close(g_fd);
 	free_list(&farm->list);
 	send_insects(farm, start, end);
 	// system("leaks lem-in > leaks");

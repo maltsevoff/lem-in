@@ -86,6 +86,8 @@ void		read_links(char *line, t_lem *farm)
 			set_link(line, farm);
 		in_list_end(&farm->list, line);
 	}
+	if (farm->start == NULL || farm->end == NULL)
+		ft_error("Doesn't exist start/end.\n");
 }
 
 void		input_data(t_lem *farm)

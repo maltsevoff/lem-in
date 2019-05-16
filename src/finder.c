@@ -34,10 +34,16 @@ void		delete_from_con(t_room *target, t_room *room)
 	}
 }
 
-void		delete_links(t_room *current)
+void		delete_links(t_room *current, t_room *end)
 {
 	t_link		*tmp;
 
+	if (current == end)
+	{
+		delete_from_con(current, current->way);
+		delete_from_con(current->way, current);
+		return ;
+	}
 	while (current->link != NULL)
 	{
 		delete_from_con(current, current->link->rm);
@@ -59,8 +65,8 @@ void		save_delete(t_way *way, t_room *end, t_room *start)
 	while (current != NULL && i >= 0)
 	{
 		way->room[i] = current;
-		if (current != start && current != end)
-			delete_links(current);
+		if (current != start)
+			delete_links(current, end);
 		i--;
 		current = current->way;
 	}
@@ -93,6 +99,7 @@ void		find_ways(t_lem *farm, t_room *start, t_room *end)
 
 	while (bfs(farm, end, start))
 	{
+		printf("tut\n");
 		save_way(farm, end, start);
 		tmp_room = farm->rooms;
 		while (tmp_room != NULL)
