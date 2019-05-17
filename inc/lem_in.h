@@ -74,6 +74,7 @@ int				valid_connect_links(t_link *link, t_room *room1, t_room *room2);
 void			find_ways(t_lem *farm, t_room *start, t_room *end);
 int				bfs(t_lem *farm, t_room *end, t_room *room);
 void			send_insects(t_lem *farm, t_room *start, t_room *end);
+void			check_non_valid(t_lem *farm);
 
 void			in_list_end(t_list **lst, char *str);
 void			print_list(t_list *lst);

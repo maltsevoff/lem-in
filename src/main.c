@@ -35,9 +35,9 @@ int			main(void)
 	input_data(farm);
 	start = find_room(farm->rooms, farm->start);
 	end = find_room(farm->rooms, farm->end);
-	print_list(farm->list);
 	// delete_links(&farm);
 	find_ways(farm, start, end);
+	print_list(farm->list);
 	free_list(&farm->list);
 	send_insects(farm, start, end);
 	// system("leaks lem-in > leaks");

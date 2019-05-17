@@ -64,11 +64,11 @@ void		set_link(char *line, t_lem *farm)
 	name1 = ft_strndup(line, ft_strchr(line, '-') - line);
 	name2 = ft_strdup(ft_strchr(line, '-') + 1);
 	if ((tmp_room = find_room(farm->rooms, name1)) == NULL)
-		ft_error("room doesn't exist\n");
+		check_non_valid(farm);
 	link = add_last_link(tmp_room);
 	if (valid_connect_links(link, tmp_room,
 			find_room(farm->rooms, name2)) == 0)
-		ft_error("room doesn't exist\n");
+		check_non_valid(farm);
 	tmp_room = find_room(farm->rooms, name2);
 	link = add_last_link(tmp_room);
 	valid_connect_links(link, tmp_room, find_room(farm->rooms, name1));
@@ -78,6 +78,8 @@ void		set_link(char *line, t_lem *farm)
 
 void		read_links(char *line, t_lem *farm)
 {
+	if (farm->start == NULL || farm->end == NULL)
+		ft_error("Doesn't exist start/end.\n");
 	set_link(line, farm);
 	in_list_end(&farm->list, line);
 	while (get_next_line(g_fd, &line) > 0)
@@ -86,8 +88,6 @@ void		read_links(char *line, t_lem *farm)
 			set_link(line, farm);
 		in_list_end(&farm->list, line);
 	}
-	if (farm->start == NULL || farm->end == NULL)
-		ft_error("Doesn't exist start/end.\n");
 }
 
 void		input_data(t_lem *farm)

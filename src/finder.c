@@ -99,7 +99,6 @@ void		find_ways(t_lem *farm, t_room *start, t_room *end)
 
 	while (bfs(farm, end, start))
 	{
-		printf("tut\n");
 		save_way(farm, end, start);
 		tmp_room = farm->rooms;
 		while (tmp_room != NULL)

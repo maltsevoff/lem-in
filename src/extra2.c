@@ -37,3 +37,22 @@ int			map_len(char **map)
 		i++;
 	return (i);
 }
+
+void		check_non_valid(t_lem *farm)
+{
+	t_room		*start;
+	t_room		*end;
+
+	start = find_room(farm->rooms, farm->start);
+	end = find_room(farm->rooms, farm->end);
+	find_ways(farm, start, end);
+	if (!farm->way)
+		ft_error("Linked room doesn't exist\n");
+	else
+	{
+		print_list(farm->list);
+		free_list(&farm->list);
+		send_insects(farm, start, end);
+	}
+	exit(0);
+}
