@@ -32,15 +32,17 @@ void		read_room(char *line, t_lem *farm)
 	free_map(map);
 }
 
-void		command_start_end(char *line, t_lem *farm, char **position)
+void		command_start_end(char *line, t_lem *farm, char **position, int fl)
 {
 	char	**map;
 
+	if ((farm->start != NULL && fl == 1) || (farm->end != NULL && fl == 2))
+		ft_error("Too many start/end commands\n");
 	in_list_end(&farm->list, line);
-	while (get_next_line(g_fd, &line) > 0)
+	while (get_next_line(g_fd, &line) > 0 && *line)
 	{
 		if (ft_strncmp(line, "#", 1) == 0)
-			in_list_end(&farm->list, line);
+			check_hash(line, farm);
 		else
 		{
 			map = ft_strsplit(line, ' ');
@@ -63,6 +65,7 @@ void		set_link(char *line, t_lem *farm)
 	valid_link(line);
 	name1 = ft_strndup(line, ft_strchr(line, '-') - line);
 	name2 = ft_strdup(ft_strchr(line, '-') + 1);
+	printf("%s %s %s\n", line, name1, name2);
 	if ((tmp_room = find_room(farm->rooms, name1)) == NULL)
 		check_non_valid(farm);
 	link = add_last_link(tmp_room);
@@ -95,16 +98,16 @@ void		input_data(t_lem *farm)
 	char		*line;
 
 	get_next_line(g_fd, &line);
-	farm->ants = ft_atoi(line);
+	farm->ants = valid_ants(line);
 	in_list_end(&farm->list, line);
 	while (get_next_line(g_fd, &line) > 0)
 	{
 		if (ft_strcmp(line, "##start") == 0)
-			command_start_end(line, farm, &farm->start);
+			command_start_end(line, farm, &farm->start, 1);
 		else if (ft_strcmp(line, "##end") == 0)
-			command_start_end(line, farm, &farm->end);
+			command_start_end(line, farm, &farm->end, 2);
 		else if (ft_strncmp(line, "#", 1) == 0)
-			in_list_end(&farm->list, line);
+			check_hash(line, farm);
 		else
 		{
 			if (valid_size(line) == 0)

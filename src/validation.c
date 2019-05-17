@@ -18,6 +18,23 @@ void		ft_error(char *error_info)
 	exit(0);
 }
 
+int			valid_ants(char *str)
+{
+	int			i;
+	int			number;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] < '0' || str[i] > '9')
+			ft_error("Invalid ants number\n");
+	}
+	number = ft_atoi(str);
+	if (number <= 0)
+		ft_error("Invalid ants number\n");
+	return (number);
+}
+
 int			valid_connect_links(t_link *link, t_room *room1,
 									t_room *room2)
 {
@@ -61,28 +78,48 @@ void		valid_room(char *str)
 		ft_error("invalid room\n");
 }
 
+// void		valid_link(char *str)
+// {
+// 	int		i;
+// 	int		tmp;
+
+// 	i = 0;
+// 	if (str == NULL || str[i] == '\0')
+// 		ft_error("invalid link\n");
+// 	tmp = i;
+// 	while (str[i] && str[i] != '-')
+// 		i++;
+// 	if (str[i] != '-' || tmp == i)
+// 		ft_error("invalid link\n");
+// 	tmp = ++i;
+// 	while (str[i])
+// 		i++;
+// 	if (tmp == i)
+// 		ft_error("invalid link\n");
+// 	i = -1;
+// 	while (str[++i])
+// 		if (str[i] == '#')
+// 			ft_error("invalid link\n");
+// }
+
 void		valid_link(char *str)
 {
 	int		i;
-	int		tmp;
+	int		count;
+	char	**map;
 
-	i = 0;
-	if (str == NULL || str[i] == '\0')
-	{
-		ft_error("invalid link\n");
-	}
-	tmp = i;
-	while (str[i] && str[i] != '-')
-		i++;
-	if (str[i] != '-' || tmp == i)
-	{
-		ft_error("invalid link\n");
-	}
-	tmp = ++i;
-	while (str[i])
-		i++;
-	if (tmp == i)
-	{
-		ft_error("invalid link\n");
-	}
+	i = -1;
+	count = 0;
+	while (str[++i])
+		if (str[i] == '-')
+			count++;
+	if (count != 1)
+		ft_error("Invalid link\n");
+	map = ft_strsplit(str, '-');
+	if (map_len(map) != 2)
+		ft_error("Invalid link\n");
+	i = -1;
+	if (!map[0] || !map[1])
+		ft_error("Invalid link\n");
+	i = -1;
 }

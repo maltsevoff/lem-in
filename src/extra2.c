@@ -56,3 +56,18 @@ void		check_non_valid(t_lem *farm)
 	}
 	exit(0);
 }
+
+void	check_hash(char *str, t_lem *farm)
+{
+	char		**map;
+
+	map = ft_strsplit(str, ' ');
+	if (map_len(map) == 3)
+	{
+		free_map(map);
+		valid_room(str);
+	}
+	else
+		in_list_end(&farm->list, str);
+	free_map(map);
+}

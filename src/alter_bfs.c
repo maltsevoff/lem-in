@@ -39,10 +39,12 @@ void		work_room(t_room *room, t_lem *farm)
 
 	link = room->link;
 	tmp_queue = farm->queue;
+	printf("link %p %s %p\n", room->link, room->nm, room->link->rm);
 	while (link != NULL)
 	{
 		if (link->rm->fl == 0)
 		{
+			printf("tut\n");
 			link->rm->way = room;
 			link->rm->level = room->level + 1;
 			in_queue_end(farm, link->rm);

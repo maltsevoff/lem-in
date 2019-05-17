@@ -49,8 +49,7 @@ void		move_ants(t_way *way, t_room *start, t_room *end, int *flag)
 			way->room[i - 1]->fl = 0;
 		}
 		if (way->room[i]->fl > 0 && (*flag = 1))
-			;
-				// show_turn(way->room[i]->fl, way->room[i]->nm);
+			show_turn(way->room[i]->fl, way->room[i]->nm);
 		if (way->room[i] == end)
 			way->room[i]->fl = 0;
 		i--;
@@ -72,7 +71,7 @@ void		send_insects(t_lem *farm, t_room *start, t_room *end)
 	{
 		flag = 0;
 		way = farm->way;
-		// printf("\n");
+		printf("\n");
 		string++;
 		while (way != NULL)
 		{
@@ -81,12 +80,12 @@ void		send_insects(t_lem *farm, t_room *start, t_room *end)
 			if (farm->ants > tmp_ants && farm->ants > 0 && ++flag)
 			{
 				way->room[1]->fl = ants;
-				// show_turn(way->room[1]->fl, way->room[1]->nm);
+				show_turn(way->room[1]->fl, way->room[1]->nm);
 				ants++;
 				farm->ants--;
 			}
 			way = way->next;
 		}
 	}
-	printf("strings: %d\n", --string);
+	printf("STEPS: %d\n", --string);
 }

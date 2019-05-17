@@ -1,13 +1,13 @@
-Process:         lem-in [48607]
+Process:         lem-in [73923]
 Path:            /Users/omaltsev/Desktop/lem_in/lem-in
-Load Address:    0x101ee9000
+Load Address:    0x10204b000
 Identifier:      lem-in
 Version:         ???
 Code Type:       X86-64
-Parent Process:  zsh [47631]
+Parent Process:  zsh [45508]
 
-Date/Time:       2019-05-14 12:15:37.484 +0300
-Launch Time:     2019-05-14 12:15:37.212 +0300
+Date/Time:       2019-05-17 19:39:49.759 +0300
+Launch Time:     2019-05-17 19:39:49.454 +0300
 OS Version:      Mac OS X 10.13.3 (17D47)
 Report Version:  7
 Analysis Tool:   /Applications/Xcode.app/Contents/Developer/usr/bin/leaks
@@ -15,7 +15,20 @@ Analysis Tool Version:  Xcode 9.2 (9C40b)
 ----
 
 leaks Report Version:  2.0
-Process 48607: 199 nodes malloced for 18 KB
-Process 48607: 1 leak for 16 total leaked bytes.
-Leak: 0x7fa01c403140  size=16  zone: DefaultMallocZone_0x101ef1000
-	0x1c402d40 0x00007fa0 0x1c403470 0x00007fa0 	@-@.....p4@.....
+Process 73923: 185 nodes malloced for 18 KB
+Process 73923: 9 leaks for 192 total leaked bytes.
+Leak: 0x7ffca8c027d0  size=16  zone: DefaultMallocZone_0x102053000  length: 1  "a"
+Leak: 0x7ffca8c02b10  size=16  zone: DefaultMallocZone_0x102053000  length: 1  "b"
+Leak: 0x7ffca8c02b20  size=16  zone: DefaultMallocZone_0x102053000  length: 1  "b"
+Leak: 0x7ffca8c02b70  size=32  zone: DefaultMallocZone_0x102053000
+	0xa8c027d0 0x00007ffc 0xa8c02b20 0x00007ffc 	.'...... +......
+	0x00000000 0x00000000 0x00000000 0x00000000 	................
+Leak: 0x7ffca8c02b90  size=16  zone: DefaultMallocZone_0x102053000  length: 1  "c"
+Leak: 0x7ffca8c02c10  size=32  zone: DefaultMallocZone_0x102053000
+	0xa8c02b10 0x00007ffc 0xa8c02c30 0x00007ffc 	.+......0,......
+	0x00000000 0x00000000 0x00000000 0x00000000 	................
+Leak: 0x7ffca8c02c30  size=16  zone: DefaultMallocZone_0x102053000  length: 1  "c"
+Leak: 0x7ffca8c02c40  size=16  zone: DefaultMallocZone_0x102053000  length: 1  "d"
+Leak: 0x7ffca8c02ca0  size=32  zone: DefaultMallocZone_0x102053000
+	0xa8c02b90 0x00007ffc 0xa8c02c40 0x00007ffc 	.+......@,......
+	0x00000000 0x00000000 0x00000000 0x00000000 	................
