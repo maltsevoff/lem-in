@@ -77,6 +77,7 @@ void			send_insects(t_lem *farm, t_room *start, t_room *end);
 void			check_non_valid(t_lem *farm);
 int				valid_ants(char *str);
 void			check_hash(char *str, t_lem *farm);
+int				valid_coord(t_room *room, t_lem *farm);
 
 void			in_list_end(t_list **lst, char *str);
 void			print_list(t_list *lst);

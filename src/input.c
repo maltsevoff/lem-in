@@ -26,9 +26,11 @@ void		read_room(char *line, t_lem *farm)
 	i = -1;
 	while (room->nm[++i])
 		if (room->nm[i] == '-')
-			ft_error("using '-' in room name is forbidden\n");
+			ft_error("Using '-' in room name is forbidden.\n");
 	room->coor->x = ft_atoi(map[1]);
 	room->coor->y = ft_atoi(map[2]);
+	if (valid_coord(room, farm) == 0)
+		ft_error("Same coordinates\n");
 	free_map(map);
 }
 
@@ -37,7 +39,7 @@ void		command_start_end(char *line, t_lem *farm, char **position, int fl)
 	char	**map;
 
 	if ((farm->start != NULL && fl == 1) || (farm->end != NULL && fl == 2))
-		ft_error("Too many start/end commands\n");
+		ft_error("Too many start/end commands.\n");
 	in_list_end(&farm->list, line);
 	while (get_next_line(g_fd, &line) > 0 && *line)
 	{
@@ -65,7 +67,6 @@ void		set_link(char *line, t_lem *farm)
 	valid_link(line);
 	name1 = ft_strndup(line, ft_strchr(line, '-') - line);
 	name2 = ft_strdup(ft_strchr(line, '-') + 1);
-	printf("%s %s %s\n", line, name1, name2);
 	if ((tmp_room = find_room(farm->rooms, name1)) == NULL)
 		check_non_valid(farm);
 	link = add_last_link(tmp_room);

@@ -78,30 +78,6 @@ void		valid_room(char *str)
 		ft_error("invalid room\n");
 }
 
-// void		valid_link(char *str)
-// {
-// 	int		i;
-// 	int		tmp;
-
-// 	i = 0;
-// 	if (str == NULL || str[i] == '\0')
-// 		ft_error("invalid link\n");
-// 	tmp = i;
-// 	while (str[i] && str[i] != '-')
-// 		i++;
-// 	if (str[i] != '-' || tmp == i)
-// 		ft_error("invalid link\n");
-// 	tmp = ++i;
-// 	while (str[i])
-// 		i++;
-// 	if (tmp == i)
-// 		ft_error("invalid link\n");
-// 	i = -1;
-// 	while (str[++i])
-// 		if (str[i] == '#')
-// 			ft_error("invalid link\n");
-// }
-
 void		valid_link(char *str)
 {
 	int		i;

@@ -33,7 +33,11 @@ int			count_tmp(t_way *way, t_way *list)
 
 void		show_turn(int ant_num, char *room_name)
 {
-	printf("L%d-%s ", ant_num, room_name);
+	ft_putstr("L");
+	ft_putnbr(ant_num);
+	ft_putstr("-");
+	ft_putstr(room_name);
+	ft_putstr(" ");
 }
 
 void		move_ants(t_way *way, t_room *start, t_room *end, int *flag)
@@ -56,36 +60,55 @@ void		move_ants(t_way *way, t_room *start, t_room *end, int *flag)
 	}
 }
 
+int			check_way(t_lem *farm, t_way *way, t_room *start, int *flag)
+{
+	static int	ants = 1;
+
+	if (way->length > 1 && way->room[way->length - 2] == start)
+	{
+		while (farm->ants > 0)
+		{
+			way->room[1]->fl = ants;
+			show_turn(way->room[1]->fl, way->room[1]->nm);
+			ants++;
+			farm->ants--;
+		}
+		ft_putstr("\n");
+		return (1);
+	}
+	if (farm->ants > count_tmp(way, farm->way) && farm->ants > 0 && ++(*flag))
+	{
+		way->room[1]->fl = ants;
+		show_turn(way->room[1]->fl, way->room[1]->nm);
+		ants++;
+		farm->ants--;
+	}
+	return (0);
+}
+
 void		send_insects(t_lem *farm, t_room *start, t_room *end)
 {
-	int		ants;
-	int		tmp_ants;
 	int		flag;
 	int		string;
 	t_way	*way;
 
-	ants = 1;
 	flag = 1;
 	string = 0;
 	while (flag)
 	{
 		flag = 0;
 		way = farm->way;
-		printf("\n");
+		ft_putstr("\n");
 		string++;
 		while (way != NULL)
 		{
 			move_ants(way, start, end, &flag);
-			tmp_ants = count_tmp(way, farm->way);
-			if (farm->ants > tmp_ants && farm->ants > 0 && ++flag)
-			{
-				way->room[1]->fl = ants;
-				show_turn(way->room[1]->fl, way->room[1]->nm);
-				ants++;
-				farm->ants--;
-			}
+			if (check_way(farm, way, start, &flag) == 1)
+				string++;
 			way = way->next;
 		}
 	}
-	printf("STEPS: %d\n", --string);
+	ft_putstr("STEPS: ");
+	ft_putnbr(--string);
+	ft_putstr("\n");
 }

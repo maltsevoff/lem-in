@@ -1,10 +1,8 @@
-1
+2
 ##start
 a 0 0
-b#c 1 1
 c 2 2
 ##end
 d 3 3
-a-b
-b-c
+a-c
 c-d

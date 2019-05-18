@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-int			valid_size(char *line)
+int		valid_size(char *line)
 {
 	int			res;
 	char		**map;
@@ -26,7 +26,7 @@ int			valid_size(char *line)
 	return (res);
 }
 
-int			map_len(char **map)
+int		map_len(char **map)
 {
 	int		i;
 
@@ -38,7 +38,7 @@ int			map_len(char **map)
 	return (i);
 }
 
-void		check_non_valid(t_lem *farm)
+void	check_non_valid(t_lem *farm)
 {
 	t_room		*start;
 	t_room		*end;
@@ -67,7 +67,24 @@ void	check_hash(char *str, t_lem *farm)
 		free_map(map);
 		valid_room(str);
 	}
+	else if (ft_strcmp(str, "##start") == 0 || ft_strcmp(str, "##end") == 0)
+		ft_error("Too many start/end commands.\n");
 	else
 		in_list_end(&farm->list, str);
 	free_map(map);
+}
+
+int		valid_coord(t_room *room, t_lem *farm)
+{
+	t_room	*tmp;
+
+	tmp = farm->rooms;
+	while (tmp)
+	{
+		if (room->coor->x == tmp->coor->x && room->coor->y == tmp->coor->y &&
+			room != tmp)
+			return (0);
+		tmp = tmp->next;
+	}
+	return (1);
 }
