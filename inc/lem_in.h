@@ -79,6 +79,7 @@ void			check_non_valid(t_lem *farm, char *error_info);
 int				valid_ants(char *str);
 void			check_hash(char *str, t_lem *farm);
 int				valid_coord(t_room *room, t_lem *farm);
+void			input_ants(t_lem *farm);
 
 void			show_ways(t_way *way);
 void			in_list_end(t_list **lst, char *str);

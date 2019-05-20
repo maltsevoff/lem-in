@@ -27,11 +27,11 @@ int			valid_ants(char *str)
 	while (str[++i])
 	{
 		if (str[i] < '0' || str[i] > '9')
-			ft_error("Invalid ants number\n");
+			ft_error("Invalid ants number.\n");
 	}
 	number = ft_atoi(str);
 	if (number <= 0)
-		ft_error("Invalid ants number\n");
+		ft_error("Invalid ants number.\n");
 	return (number);
 }
 
@@ -46,7 +46,7 @@ int			valid_connect_links(t_link *link, t_room *room1,
 	while (all_link != NULL)
 	{
 		if (all_link->rm == room2)
-			check_non_valid(farm, "Same link\n");
+			check_non_valid(farm, "Same link.\n");
 		all_link = all_link->next;
 	}
 	link->rm = room2;
@@ -97,5 +97,6 @@ void		valid_link(char *str, t_lem *farm)
 	i = -1;
 	if (!map[0] || !map[1])
 		check_non_valid(farm, "Invalid link\n");
+	free_map(map);
 	i = -1;
 }

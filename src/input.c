@@ -105,10 +105,7 @@ void		input_data(t_lem *farm)
 {
 	char		*line;
 
-	if (get_next_line(g_fd, &line) < 1)
-		ft_error("Invalid file.\n");
-	farm->ants = valid_ants(line);
-	in_list_end(&farm->list, line);
+	input_ants(farm);
 	while (get_next_line(g_fd, &line) > 0)
 		if (ft_strcmp(line, "##start") == 0)
 			command_start_end(line, farm, &farm->start, 1);

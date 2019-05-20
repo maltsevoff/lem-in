@@ -72,3 +72,24 @@ void		show_ways(t_way *way)
 		way = way->next;
 	}
 }
+
+void		input_ants(t_lem *farm)
+{
+	char	*line;
+
+	while (get_next_line(g_fd, &line) > 0)
+	{
+		if (ft_strcmp(line, "##start") == 0 || ft_strcmp(line, "##end") == 0)
+			ft_error("Invalid ants number.\n");
+		else if (ft_strncmp(line, "#", 1) == 0)
+			in_list_end(&farm->list, line);
+		else
+		{
+			farm->ants = valid_ants(line);
+			in_list_end(&farm->list, line);
+			break ;
+		}
+	}
+	if (farm->ants == 0)
+		ft_error("Invalid ants number.\n");
+}
