@@ -38,7 +38,7 @@ int		map_len(char **map)
 	return (i);
 }
 
-void	check_non_valid(t_lem *farm)
+void	check_non_valid(t_lem *farm, char *error_info)
 {
 	t_room		*start;
 	t_room		*end;
@@ -47,7 +47,7 @@ void	check_non_valid(t_lem *farm)
 	end = find_room(farm->rooms, farm->end);
 	find_ways(farm, start, end);
 	if (!farm->way)
-		ft_error("Linked room doesn't exist\n");
+		ft_error(error_info);
 	else
 	{
 		print_list(farm->list);

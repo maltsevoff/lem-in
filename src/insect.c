@@ -100,7 +100,7 @@ void		send_insects(t_lem *farm, t_room *start, t_room *end)
 		way = farm->way;
 		ft_putstr("\n");
 		string++;
-		while (way != NULL)
+		while (way != NULL && farm->ants > 0)
 		{
 			move_ants(way, start, end, &flag);
 			if (check_way(farm, way, start, &flag) == 1)
@@ -111,4 +111,5 @@ void		send_insects(t_lem *farm, t_room *start, t_room *end)
 	ft_putstr("STEPS: ");
 	ft_putnbr(--string);
 	ft_putstr("\n");
+	show_ways(farm->way);
 }

@@ -51,16 +51,6 @@ void		work_room(t_room *room, t_lem *farm)
 	}
 }
 
-void		show_queue(t_link *queue)
-{
-	while (queue != NULL)
-	{
-		printf("[%s] ", queue->rm->nm);
-		queue = queue->next;
-	}
-	printf("\n");
-}
-
 int			bfs(t_lem *farm, t_room *end, t_room *start)
 {
 	t_link		*tmp_queue;

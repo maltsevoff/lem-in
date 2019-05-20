@@ -16,6 +16,7 @@ void		read_room(char *line, t_lem *farm)
 {
 	int			i;
 	t_room		*room;
+	t_room		*tmp_rm;
 	char		**map;
 
 	valid_room(line);
@@ -23,6 +24,12 @@ void		read_room(char *line, t_lem *farm)
 	map = ft_strsplit(line, ' ');
 	room->coor = (t_coord *)ft_memalloc(sizeof(t_coord));
 	room->nm = ft_strdup(map[0]);
+	tmp_rm = farm->rooms;
+	while (tmp_rm)
+		if (tmp_rm != room && ft_strcmp(tmp_rm->nm, room->nm) == 0)
+			ft_error("Same room name.\n");
+		else
+			tmp_rm = tmp_rm->next;
 	i = -1;
 	while (room->nm[++i])
 		if (room->nm[i] == '-')
@@ -64,18 +71,18 @@ void		set_link(char *line, t_lem *farm)
 	t_room		*tmp_room;
 	t_link		*link;
 
-	valid_link(line);
+	valid_link(line, farm);
 	name1 = ft_strndup(line, ft_strchr(line, '-') - line);
 	name2 = ft_strdup(ft_strchr(line, '-') + 1);
 	if ((tmp_room = find_room(farm->rooms, name1)) == NULL)
-		check_non_valid(farm);
+		check_non_valid(farm, "Linked room doesn't exist\n");
 	link = add_last_link(tmp_room);
 	if (valid_connect_links(link, tmp_room,
-			find_room(farm->rooms, name2)) == 0)
-		check_non_valid(farm);
+			find_room(farm->rooms, name2), farm) == 0)
+		check_non_valid(farm, "Linked room doesn't exist\n");
 	tmp_room = find_room(farm->rooms, name2);
 	link = add_last_link(tmp_room);
-	valid_connect_links(link, tmp_room, find_room(farm->rooms, name1));
+	valid_connect_links(link, tmp_room, find_room(farm->rooms, name1), farm);
 	ft_strdel(&name1);
 	ft_strdel(&name2);
 }
@@ -98,11 +105,11 @@ void		input_data(t_lem *farm)
 {
 	char		*line;
 
-	get_next_line(g_fd, &line);
+	if (get_next_line(g_fd, &line) < 1)
+		ft_error("Invalid file.\n");
 	farm->ants = valid_ants(line);
 	in_list_end(&farm->list, line);
 	while (get_next_line(g_fd, &line) > 0)
-	{
 		if (ft_strcmp(line, "##start") == 0)
 			command_start_end(line, farm, &farm->start, 1);
 		else if (ft_strcmp(line, "##end") == 0)
@@ -119,6 +126,5 @@ void		input_data(t_lem *farm)
 				in_list_end(&farm->list, line);
 			}
 		}
-	}
 	read_links(line, farm);
 }

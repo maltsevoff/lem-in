@@ -68,17 +68,19 @@ t_room			*find_room(t_room *root, char *name);
 t_link			*add_last_link(t_room *room);
 void			valid_room(char *str);
 void			ft_error(char *error_info);
-void			valid_link(char *str);
+void			valid_link(char *str, t_lem *farm);
 int				algorithm(t_lem *farm, t_room *end, t_room *room);
-int				valid_connect_links(t_link *link, t_room *room1, t_room *room2);
+int				valid_connect_links(t_link *link, t_room *room1,
+					t_room *room2, t_lem *farm);
 void			find_ways(t_lem *farm, t_room *start, t_room *end);
 int				bfs(t_lem *farm, t_room *end, t_room *room);
 void			send_insects(t_lem *farm, t_room *start, t_room *end);
-void			check_non_valid(t_lem *farm);
+void			check_non_valid(t_lem *farm, char *error_info);
 int				valid_ants(char *str);
 void			check_hash(char *str, t_lem *farm);
 int				valid_coord(t_room *room, t_lem *farm);
 
+void			show_ways(t_way *way);
 void			in_list_end(t_list **lst, char *str);
 void			print_list(t_list *lst);
 void			free_list(t_list **lst);

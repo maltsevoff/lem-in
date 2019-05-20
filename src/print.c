@@ -53,3 +53,22 @@ void		free_list(t_list **lst)
 		*lst = tmp;
 	}
 }
+
+void		show_ways(t_way *way)
+{
+	int		i;
+
+	while (way != NULL)
+	{
+		i = 0;
+		while (i < way->length)
+		{
+			ft_putstr("[");
+			ft_putstr(way->room[i]->nm);
+			ft_putstr("] ");
+			i++;
+		}
+		ft_putstr("\n");
+		way = way->next;
+	}
+}

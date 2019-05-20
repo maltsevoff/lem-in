@@ -6,7 +6,7 @@
 /*   By: omaltsev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 15:41:10 by omaltsev          #+#    #+#             */
-/*   Updated: 2019/04/17 15:41:13 by omaltsev         ###   ########.fr       */
+/*   Updated: 2019/05/20 13:21:34 by omaltsev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,11 @@ int			main(void)
 	input_data(farm);
 	start = find_room(farm->rooms, farm->start);
 	end = find_room(farm->rooms, farm->end);
-	// delete_links(&farm);
 	find_ways(farm, start, end);
 	if (!farm->way)
 		ft_error("No ways\n");
 	print_list(farm->list);
 	free_list(&farm->list);
 	send_insects(farm, start, end);
-	// system("leaks lem-in > leaks");
-	// printf("leak: %p\n", farm);
 	return (0);
 }

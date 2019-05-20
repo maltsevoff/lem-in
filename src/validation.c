@@ -36,7 +36,7 @@ int			valid_ants(char *str)
 }
 
 int			valid_connect_links(t_link *link, t_room *room1,
-									t_room *room2)
+									t_room *room2, t_lem *farm)
 {
 	t_link		*all_link;
 
@@ -46,7 +46,7 @@ int			valid_connect_links(t_link *link, t_room *room1,
 	while (all_link != NULL)
 	{
 		if (all_link->rm == room2)
-			ft_error("Same link\n");
+			check_non_valid(farm, "Same link\n");
 		all_link = all_link->next;
 	}
 	link->rm = room2;
@@ -78,7 +78,7 @@ void		valid_room(char *str)
 		ft_error("invalid room\n");
 }
 
-void		valid_link(char *str)
+void		valid_link(char *str, t_lem *farm)
 {
 	int		i;
 	int		count;
@@ -90,12 +90,12 @@ void		valid_link(char *str)
 		if (str[i] == '-')
 			count++;
 	if (count != 1)
-		ft_error("Invalid link\n");
+		check_non_valid(farm, "Invalid link\n");
 	map = ft_strsplit(str, '-');
 	if (map_len(map) != 2)
-		ft_error("Invalid link\n");
+		check_non_valid(farm, "Invalid link\n");
 	i = -1;
 	if (!map[0] || !map[1])
-		ft_error("Invalid link\n");
+		check_non_valid(farm, "Invalid link\n");
 	i = -1;
 }
