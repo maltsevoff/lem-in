@@ -108,8 +108,6 @@ void		send_insects(t_lem *farm, t_room *start, t_room *end)
 			way = way->next;
 		}
 	}
-	ft_putstr("STEPS: ");
-	ft_putnbr(--string);
-	ft_putstr("\n");
-	show_ways(farm->way);
+	if (farm->bonus)
+		ft_bonus(farm, string);
 }

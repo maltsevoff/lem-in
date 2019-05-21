@@ -54,6 +54,7 @@ typedef struct	s_lem
 	int		ants;
 	t_way	*way;
 	t_list	*list;
+	int		bonus;
 }				t_lem;
 
 int				g_fd;
@@ -81,6 +82,7 @@ void			check_hash(char *str, t_lem *farm);
 int				valid_coord(t_room *room, t_lem *farm);
 void			input_ants(t_lem *farm);
 
+void			ft_bonus(t_lem *farm, int steps);
 void			show_ways(t_way *way);
 void			in_list_end(t_list **lst, char *str);
 void			print_list(t_list *lst);

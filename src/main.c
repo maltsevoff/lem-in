@@ -24,7 +24,15 @@ void		zero_flags(t_lem *farm)
 	}
 }
 
-int			main(void)
+void		ft_bonus(t_lem *farm, int steps)
+{
+	ft_putstr("STEPS: ");
+	ft_putnbr(--steps);
+	ft_putstr("\n");
+	show_ways(farm->way);
+}
+
+int			main(int argc, char **argv)
 {
 	t_room	*start;
 	t_room	*end;
@@ -32,6 +40,8 @@ int			main(void)
 
 	g_fd = 0;
 	farm = (t_lem *)ft_memalloc(sizeof(t_lem));
+	if (argc == 2 && ft_strcmp(argv[1], "--bonus") == 0)
+		farm->bonus = 1;
 	input_data(farm);
 	start = find_room(farm->rooms, farm->start);
 	end = find_room(farm->rooms, farm->end);
