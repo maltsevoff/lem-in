@@ -81,9 +81,11 @@ int				valid_ants(char *str);
 void			check_hash(char *str, t_lem *farm);
 int				valid_coord(t_room *room, t_lem *farm);
 void			input_ants(t_lem *farm);
+void			one_way(t_lem *farm, t_way *way, t_room *start);
 
 void			ft_bonus(t_lem *farm, int steps);
 void			show_ways(t_way *way);
+void			show_turn(int ant_num, char *room_name);
 void			in_list_end(t_list **lst, char *str);
 void			print_list(t_list *lst);
 void			free_list(t_list **lst);

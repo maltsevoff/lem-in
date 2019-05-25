@@ -24,6 +24,28 @@ void		zero_flags(t_lem *farm)
 	}
 }
 
+void		one_way(t_lem *farm, t_way *way, t_room *start)
+{
+	int		ants;
+
+	if (way->length > 1 && way->room[way->length - 2] == start)
+	{
+		ants = 1;
+		ft_putstr("\n");
+		while (farm->ants > 0)
+		{
+			way->room[1]->fl = ants;
+			show_turn(way->room[1]->fl, way->room[1]->nm);
+			ants++;
+			farm->ants--;
+		}
+		ft_putstr("\n");
+		if (farm->bonus)
+			ft_bonus(farm, 2);
+		exit(0);
+	}
+}
+
 void		ft_bonus(t_lem *farm, int steps)
 {
 	ft_putstr("STEPS: ");
