@@ -60,22 +60,10 @@ void		move_ants(t_way *way, t_room *start, t_room *end, int *flag)
 	}
 }
 
-int			check_way(t_lem *farm, t_way *way, t_room *start, int *flag)
+int			check_way(t_lem *farm, t_way *way, int *flag)
 {
 	static int	ants = 1;
 
-	if (way->length > 1 && way->room[way->length - 2] == start)
-	{
-		while (farm->ants > 0)
-		{
-			way->room[1]->fl = ants;
-			show_turn(way->room[1]->fl, way->room[1]->nm);
-			ants++;
-			farm->ants--;
-		}
-		ft_putstr("\n");
-		return (1);
-	}
 	if (farm->ants > count_tmp(way, farm->way) && farm->ants > 0 && ++(*flag))
 	{
 		way->room[1]->fl = ants;
@@ -86,25 +74,57 @@ int			check_way(t_lem *farm, t_way *way, t_room *start, int *flag)
 	return (0);
 }
 
+void		one_way(t_lem *farm, t_way *way, t_room *start)
+{
+	int		ants;
+
+	if (way->length > 1 && way->room[way->length - 2] == start)
+	{
+		ants = 1;
+		ft_putstr("\n");
+		while (farm->ants > 0)
+		{
+			way->room[1]->fl = ants;
+			show_turn(way->room[1]->fl, way->room[1]->nm);
+			ants++;
+			farm->ants--;
+		}
+		ft_putstr("\n");
+		if (farm->bonus)
+			ft_bonus(farm, 2);
+		exit (0);
+	}
+}
+
 void		send_insects(t_lem *farm, t_room *start, t_room *end)
 {
 	int		flag;
 	int		string;
+	int		ants;
 	t_way	*way;
 
 	flag = 1;
 	string = 0;
+	ants = 1;
+	one_way(farm, farm->way, start);
 	while (flag)
 	{
 		flag = 0;
 		way = farm->way;
 		ft_putstr("\n");
 		string++;
-		while (way != NULL && farm->ants > 0)
+		while (way != NULL)
 		{
 			move_ants(way, start, end, &flag);
-			if (check_way(farm, way, start, &flag) == 1)
-				string++;
+			// if (check_way(farm, way, &flag) == 1)
+			// 	string++;
+			if (farm->ants > count_tmp(way, farm->way) && farm->ants > 0 && ++flag)
+			{
+				way->room[1]->fl = ants;
+				show_turn(way->room[1]->fl, way->room[1]->nm);
+				ants++;
+				farm->ants--;
+			}
 			way = way->next;
 		}
 	}
